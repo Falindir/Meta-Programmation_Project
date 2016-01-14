@@ -1,4 +1,3 @@
-
 (defclass memo-class (standard-class)
   ((instance-set :accessor class-instance-set
                  :initform ()))
