@@ -1,5 +1,5 @@
-(load "memoclass.lisp")
-(load "memoobject.lisp")
+(load "memo-class.lisp")
+(load "memo-object.lisp")
 
 (defclass A (memo-object)
   (())
