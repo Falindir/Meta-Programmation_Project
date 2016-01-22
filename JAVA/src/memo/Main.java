@@ -17,15 +17,15 @@ public class Main {
 
         System.out.println("\nInstances : ");
 
-        System.out.println("A instances : " + a3.getIntance());
-        System.out.println("B instances : " + b1.getIntance());
+        System.out.println("A instances : " + a3.getInstance());
+        System.out.println("B instances : " + b1.getInstance());
 
         System.out.println("");
         a2.free();
         b2.free();
 
         System.out.println("\nInstances : ");
-        System.out.println("A instances : " + a3.getIntance());
-        System.out.println("B instances : " + b1.getIntance());
+        System.out.println("A instances : " + a3.getInstance());
+        System.out.println("B instances : " + b1.getInstance());
     }
 }
