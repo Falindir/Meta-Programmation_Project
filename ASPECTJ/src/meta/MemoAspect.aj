@@ -7,16 +7,10 @@ import java.util.HashSet;
 
 public aspect MemoAspect  {
 	
-	//private interface MemoClass {}
-	//declare parents: (Person || Animal) implements MemoClass;
-	
-	//private String Person.toto = "r";
-
-	//private String meta.object.titi;
-	
-	//declare parents: meta.object.* implements MemoClass;
-	
-	
+	private interface MemoClass {}
+	declare parents: meta.* implements MemoClass;
+		
+    //static List meta.*.in = new ArrayList();
 	
     static List Person.instances = new ArrayList();
     public  List Person.getInstances()  {
@@ -35,7 +29,7 @@ public aspect MemoAspect  {
     }
 
     after(Object o) returning() : execution(new(..)) && this(o) && !within(MemoAspect) && !within(Main) {
-             	
+        
     	if(o.getClass().equals(Person.class)) {
     		((Person) o).register();
     	}
