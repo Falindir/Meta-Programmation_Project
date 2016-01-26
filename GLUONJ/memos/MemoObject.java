@@ -1,6 +1,6 @@
 package memos;
 
-public class MemoObject {
+public abstract class MemoObject {
 
 	public MemoObject() {
 		init();
@@ -10,7 +10,5 @@ public class MemoObject {
 		System.out.println("Init Class MemoObject");
 	}
 	
-	public void whoamI() {
-		System.out.println("Class MemoObject");
-	}
+	public abstract void whoamI();
 }

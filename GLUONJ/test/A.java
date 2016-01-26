@@ -9,6 +9,7 @@ public class A extends MemoObject{
 	}
 	
 	public void init() {
+		super.init();
 		System.out.println("Init Class A");
 	}
 
