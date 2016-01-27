@@ -3,6 +3,7 @@ package test;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtField;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
@@ -24,23 +25,37 @@ public class MyTranslator implements Translator {
 	@Override
 	public void onLoad(ClassPool pool, String classname) throws NotFoundException, CannotCompileException {
 		
+		if (classname.equals("test.MemoObject")) {
+			return;
+		}
+		
 		CtClass cc = pool.get(classname);
-		
-		CtField f = new CtField(CtClass.intType, "nbInstances", cc);
-		f.setModifiers(Modifier.STATIC);
-		f.setModifiers(Modifier.PRIVATE);
-		cc.addField(f);
 
-		CtMethod m = new CtMethod(CtClass.intType, "getNbInstances", null, cc);
-		m.setModifiers(Modifier.STATIC);
-		m.setModifiers(Modifier.PUBLIC);
-		m.setBody("{return nbInstances;}");
-
-		CtMethod mainMethod = cc.getDeclaredMethod("main");
-		//mainMethod.insertAfter("");
+		CtClass setClass = ClassPool.getDefault().get("java.util.Set");
+		CtClass hashSetClass = ClassPool.getDefault().get("java.util.HashSet");
 		
-		//CtClass memoInterface = pool.get("test.IMemoObject");
-		//cc.addInterface(memoInterface);
+		// Add of instances set attribute
+		CtField f = new CtField(setClass, "instances", cc);
+		f.setModifiers(Modifier.STATIC | Modifier.PRIVATE);
+		cc.addField(f, CtField.Initializer.byNew(hashSetClass));
+
+		// Registration of objects
+		CtConstructor[] constructors = cc.getConstructors();
+		for (CtConstructor constr : constructors) {
+			constr.insertAfter("instances.add(this);");
+		}
+		
+		// Override of free method
+		CtMethod freeMethod = new CtMethod(CtClass.voidType, "free", null, cc);
+		freeMethod.setModifiers(Modifier.PUBLIC);
+		freeMethod.setBody("instances.remove(this);");
+		cc.addMethod(freeMethod);
+
+		// Override of getInstances method
+		CtMethod getInstancesMethod = new CtMethod(setClass, "getInstances", null, cc);
+		getInstancesMethod.setModifiers(Modifier.PUBLIC);
+		getInstancesMethod.setBody("return instances;");
+		cc.addMethod(getInstancesMethod);
 	}
 
 	/**

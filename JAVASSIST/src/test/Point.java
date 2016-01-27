@@ -1,6 +1,6 @@
 package test;
 
-public class Point {
+public class Point extends MemoObject {
 
 	private int x;
 	
@@ -23,6 +23,10 @@ public class Point {
 	// Code instrumenté
 	public static void main(String[] args) {
 		Point p = new Point();
+		System.out.println(p.getInstances());
 		Point p2 = new Point();
+		System.out.println(p2.getInstances());
+		p.free();
+		System.out.println(p2.getInstances());
 	}
 }
