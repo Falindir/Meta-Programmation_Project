@@ -10,7 +10,7 @@ public abstract class MemoObject {
 
     protected abstract void register();
 
-    public abstract Set<? extends MemoObject> getIntance();
+    public abstract Set<? extends MemoObject> getInstance();
 
     protected abstract void free();
 

@@ -13,7 +13,7 @@ public class B extends A {
     }
 
     @Override
-    public Set<? extends B> getIntance() {
+    public Set<? extends B> getInstance() {
         return instances;
     }
 

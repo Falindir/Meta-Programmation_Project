@@ -13,7 +13,7 @@ public class A extends MemoObject {
     }
 
     @Override
-    public Set<? extends A> getIntance() {
+    public Set<? extends A> getInstance() {
         return instances;
     }
 
